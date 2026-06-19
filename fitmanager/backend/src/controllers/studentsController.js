@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Student = require("../models/Student");
 const Payment = require("../models/Payment");
 const { serializeStudent } = require("../utils/studentStatus");
@@ -70,14 +71,23 @@ async function updateStudent(req, res) {
 }
 
 async function deleteStudent(req, res) {
+  const session = await mongoose.startSession();
   try {
-    const student = await Student.findOneAndDelete({ _id: req.params.id, gymId: req.user.gymId });
+    const student = await Student.findOne({ _id: req.params.id, gymId: req.user.gymId });
     if (!student) {
       return res.status(404).json({ message: "Alumno no encontrado" });
     }
-    return res.json({ message: "Alumno eliminado" });
+
+    await session.withTransaction(async () => {
+      await Payment.deleteMany({ studentId: student._id }, { session });
+      await Student.deleteOne({ _id: student._id }, { session });
+    });
+
+    return res.json({ message: "Alumno eliminado junto con su historial de pagos" });
   } catch (err) {
     return res.status(500).json({ message: "Error al eliminar alumno", error: err.message });
+  } finally {
+    await session.endSession();
   }
 }
 

@@ -5,6 +5,7 @@ import StudentFormModal from "../components/StudentFormModal";
 import StudentCard from "../components/StudentCard";
 import StatusBadge from "../components/StatusBadge";
 import PaymentConfirmModal from "../components/PaymentConfirmModal";
+import DeleteStudentModal from "../components/DeleteStudentModal";
 
 const FILTERS = [
   { key: "todos", label: "Todos" },
@@ -20,6 +21,7 @@ export default function Students() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
   const [payingStudent, setPayingStudent] = useState(null);
+  const [deletingStudent, setDeletingStudent] = useState(null);
   const [error, setError] = useState("");
 
   async function loadStudents() {
@@ -67,10 +69,11 @@ export default function Students() {
     }
   }
 
-  async function handleDelete(id) {
-    if (!confirm("¿Eliminar este alumno?")) return;
+  async function confirmDeleteStudent() {
+    if (!deletingStudent) return;
     try {
-      await api.delete(`/students/${id}`);
+      await api.delete(`/students/${deletingStudent._id}`);
+      setDeletingStudent(null);
       loadStudents();
     } catch (err) {
       setError(err.response?.data?.message || "Error al eliminar alumno");
@@ -141,7 +144,7 @@ export default function Students() {
               key={s._id}
               student={s}
               onEdit={openEditStudent}
-              onDelete={handleDelete}
+              onDelete={() => setDeletingStudent(s)}
               onPay={setPayingStudent}
             />
           ))
@@ -193,7 +196,7 @@ export default function Students() {
                       <Pencil size={16} />
                     </button>
                     <button
-                      onClick={() => handleDelete(s._id)}
+                      onClick={() => setDeletingStudent(s)}
                       aria-label="Eliminar"
                       className="text-status-danger transition-opacity duration-200 hover:opacity-75"
                     >
@@ -227,6 +230,14 @@ export default function Students() {
           student={payingStudent}
           onClose={() => setPayingStudent(null)}
           onConfirm={confirmRegisterPayment}
+        />
+      )}
+
+      {deletingStudent && (
+        <DeleteStudentModal
+          student={deletingStudent}
+          onClose={() => setDeletingStudent(null)}
+          onConfirm={confirmDeleteStudent}
         />
       )}
     </div>
