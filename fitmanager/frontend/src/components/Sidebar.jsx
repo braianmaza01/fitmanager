@@ -24,7 +24,7 @@ export default function Sidebar() {
     >
       <div className="flex items-center gap-2 px-5 h-16 border-b border-white/[0.07]">
         <Dumbbell className="text-accent" size={22} />
-        <span className="text-text-primary font-bold text-base">
+        <span className="text-text-primary font-bold text-[1rem]">
           Fit<span className="text-accent">Manager</span>
         </span>
       </div>

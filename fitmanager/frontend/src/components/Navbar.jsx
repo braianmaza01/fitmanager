@@ -30,7 +30,7 @@ export default function Navbar() {
     `px-3 py-2 text-sm ${isActive ? "text-accent" : "text-text-secondary hover:text-text-primary"}`;
 
   const mobileLinkClass = ({ isActive }) =>
-    `block px-4 py-3 text-base border-l-2 ${
+    `block px-4 py-3 text-[1rem] border-l-2 ${
       isActive
         ? "border-accent text-accent font-medium"
         : "border-transparent text-text-secondary"
@@ -93,7 +93,7 @@ export default function Navbar() {
           )}
           <button
             onClick={handleLogout}
-            className="block w-full text-left px-4 py-3 text-base text-text-secondary border-t border-surface-3"
+            className="block w-full text-left px-4 py-3 text-[1rem] text-text-secondary border-t border-surface-3"
           >
             Salir
           </button>
