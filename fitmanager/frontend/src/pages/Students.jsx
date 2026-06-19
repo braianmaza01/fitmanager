@@ -94,7 +94,7 @@ export default function Students() {
         <h1 className="text-xl font-bold text-text-primary">Alumnos</h1>
         <button
           onClick={openNewStudent}
-          className="bg-accent text-base font-semibold px-4 py-2 hover:opacity-90"
+          className="bg-accent text-base font-semibold px-4 py-2 transition-opacity duration-200 hover:opacity-90"
         >
           Nuevo alumno
         </button>
@@ -112,7 +112,7 @@ export default function Students() {
             <button
               key={f.key}
               onClick={() => setFilter(f.key)}
-              className={`px-3 py-1.5 text-xs uppercase tracking-[0.5px] border ${
+              className={`px-3 py-1.5 text-xs uppercase tracking-[0.5px] border transition-colors duration-200 ${
                 filter === f.key
                   ? "border-accent text-accent"
                   : "border-white/[0.07] text-text-secondary hover:text-text-primary"
@@ -127,12 +127,12 @@ export default function Students() {
           placeholder="Buscar por nombre..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="bg-surface-2 border border-white/[0.07] px-3 py-1.5 text-sm text-text-primary focus:outline-none focus:border-accent ml-auto"
+          className="bg-surface-2 border border-white/[0.07] px-3 py-1.5 text-sm text-text-primary transition-colors duration-200 focus:outline-none focus:border-accent ml-auto"
         />
       </div>
 
       {/* Mobile: cards */}
-      <div className="lg:hidden">
+      <div key={filter} className="lg:hidden animate-fade-in">
         {filtered.length === 0 ? (
           <p className="text-text-secondary text-sm text-center py-6">No hay alumnos para mostrar.</p>
         ) : (
@@ -161,9 +161,9 @@ export default function Students() {
               <th className="px-4 py-3">Acciones</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody key={filter} className="animate-fade-in">
             {filtered.map((s) => (
-              <tr key={s._id} className="border-t border-white/[0.07] hover:bg-white/[0.02]">
+              <tr key={s._id} className="border-t border-white/[0.07] transition-colors duration-200 hover:bg-white/[0.02]">
                 <td className="px-4 py-3 text-text-primary">{s.nombre}</td>
                 <td className="px-4 py-3 text-text-secondary">{s.telefono || "-"}</td>
                 <td className="px-4 py-3 text-text-secondary">
@@ -181,21 +181,21 @@ export default function Students() {
                     <button
                       onClick={() => setPayingStudent(s)}
                       aria-label="Registrar pago"
-                      className="text-accent"
+                      className="text-accent transition-opacity duration-200 hover:opacity-75"
                     >
                       <DollarSign size={16} />
                     </button>
                     <button
                       onClick={() => openEditStudent(s)}
                       aria-label="Editar"
-                      className="text-text-secondary hover:text-text-primary"
+                      className="text-text-secondary transition-colors duration-200 hover:text-text-primary"
                     >
                       <Pencil size={16} />
                     </button>
                     <button
                       onClick={() => handleDelete(s._id)}
                       aria-label="Eliminar"
-                      className="text-status-danger"
+                      className="text-status-danger transition-opacity duration-200 hover:opacity-75"
                     >
                       <Trash2 size={16} />
                     </button>

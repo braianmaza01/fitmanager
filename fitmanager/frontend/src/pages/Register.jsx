@@ -28,7 +28,7 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-base flex items-center justify-center px-4">
-      <div className="w-full max-w-sm bg-surface-1 border border-surface-3 p-8">
+      <div className="w-full max-w-sm bg-surface-1 border border-surface-3 p-8 animate-fade-in">
         <h1 className="text-2xl font-bold text-text-primary mb-1">
           Fit<span className="text-accent">Manager</span>
         </h1>

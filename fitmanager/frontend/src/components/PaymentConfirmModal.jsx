@@ -9,8 +9,8 @@ export default function PaymentConfirmModal({ student, onClose, onConfirm }) {
   const nuevoVencimiento = new Date(baseDate.getTime() + 30 * DAY_MS);
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center px-4 z-50">
-      <div className="w-full max-w-sm bg-surface-1 border border-white/[0.07] rounded-[10px] p-6">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center px-4 z-50 animate-overlay-in">
+      <div className="w-full max-w-sm bg-surface-1 border border-white/[0.07] rounded-[10px] p-6 animate-modal-in">
         <h2 className="text-text-primary font-semibold text-lg mb-4">Confirmar pago</h2>
 
         <div className="space-y-2 mb-6 text-sm">
@@ -31,13 +31,13 @@ export default function PaymentConfirmModal({ student, onClose, onConfirm }) {
         <div className="flex gap-3">
           <button
             onClick={onConfirm}
-            className="flex-1 bg-accent text-base font-semibold py-2.5 hover:opacity-90"
+            className="flex-1 bg-accent text-base font-semibold py-2.5 transition-opacity duration-200 hover:opacity-90"
           >
             Confirmar pago
           </button>
           <button
             onClick={onClose}
-            className="flex-1 bg-surface-3 text-text-primary py-2.5 hover:bg-surface-2"
+            className="flex-1 bg-surface-3 text-text-primary py-2.5 transition-colors duration-200 hover:bg-surface-2"
           >
             Cancelar
           </button>

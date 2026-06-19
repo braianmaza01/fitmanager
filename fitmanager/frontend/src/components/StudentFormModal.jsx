@@ -42,8 +42,8 @@ export default function StudentFormModal({ student, onClose, onSubmit }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center px-4 z-50">
-      <div className="w-full max-w-md bg-surface-1 border border-surface-3 p-6">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center px-4 z-50 animate-overlay-in">
+      <div className="w-full max-w-md bg-surface-1 border border-surface-3 p-6 animate-modal-in">
         <h2 className="text-text-primary font-semibold text-lg mb-4">
           {student ? "Editar alumno" : "Nuevo alumno"}
         </h2>
@@ -56,7 +56,7 @@ export default function StudentFormModal({ student, onClose, onSubmit }) {
               required
               value={form.nombre}
               onChange={handleChange}
-              className="w-full bg-surface-2 border border-surface-3 px-3 py-2 text-text-primary focus:outline-none focus:border-accent"
+              className="w-full bg-surface-2 border border-surface-3 px-3 py-2 text-text-primary focus:outline-none focus:border-accent transition-colors duration-200"
             />
           </div>
           <div>
@@ -65,7 +65,7 @@ export default function StudentFormModal({ student, onClose, onSubmit }) {
               name="telefono"
               value={form.telefono}
               onChange={handleChange}
-              className="w-full bg-surface-2 border border-surface-3 px-3 py-2 text-text-primary focus:outline-none focus:border-accent"
+              className="w-full bg-surface-2 border border-surface-3 px-3 py-2 text-text-primary focus:outline-none focus:border-accent transition-colors duration-200"
             />
           </div>
           <div>
@@ -76,7 +76,7 @@ export default function StudentFormModal({ student, onClose, onSubmit }) {
               min="0"
               value={form.cuotaBase}
               onChange={handleChange}
-              className="w-full bg-surface-2 border border-surface-3 px-3 py-2 text-text-primary focus:outline-none focus:border-accent"
+              className="w-full bg-surface-2 border border-surface-3 px-3 py-2 text-text-primary focus:outline-none focus:border-accent transition-colors duration-200"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -101,7 +101,7 @@ export default function StudentFormModal({ student, onClose, onSubmit }) {
                 min="0"
                 value={form.montoPersonalTrainer}
                 onChange={handleChange}
-                className="w-full bg-surface-2 border border-surface-3 px-3 py-2 text-text-primary focus:outline-none focus:border-accent"
+                className="w-full bg-surface-2 border border-surface-3 px-3 py-2 text-text-primary focus:outline-none focus:border-accent transition-colors duration-200"
               />
             </div>
           )}
@@ -109,14 +109,14 @@ export default function StudentFormModal({ student, onClose, onSubmit }) {
           <div className="flex gap-3 pt-2">
             <button
               type="submit"
-              className="flex-1 bg-accent text-base font-semibold py-2.5 hover:opacity-90"
+              className="flex-1 bg-accent text-base font-semibold py-2.5 transition-opacity duration-200 hover:opacity-90"
             >
               Guardar
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-surface-3 text-text-primary py-2.5 hover:bg-surface-2"
+              className="flex-1 bg-surface-3 text-text-primary py-2.5 transition-colors duration-200 hover:bg-surface-2"
             >
               Cancelar
             </button>
