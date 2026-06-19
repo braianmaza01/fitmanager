@@ -1,7 +1,7 @@
-import { CheckCircle2, Lock } from "lucide-react";
+import { CheckCircle2, Lock, Trash2 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 
-export default function GymCard({ gym, onApprove, onBlock }) {
+export default function GymCard({ gym, onApprove, onBlock, onDelete }) {
   return (
     <div className="bg-surface-2 border border-white/[0.07] rounded-lg p-4 mb-3 transition-all duration-200 hover:bg-surface-3 hover:-translate-y-0.5">
       <div className="flex items-center justify-between gap-3">
@@ -35,6 +35,13 @@ export default function GymCard({ gym, onApprove, onBlock }) {
               <Lock size={16} />
             </button>
           )}
+          <button
+            onClick={() => onDelete(gym)}
+            aria-label="Eliminar"
+            className="text-status-danger transition-opacity duration-200 hover:opacity-75"
+          >
+            <Trash2 size={16} />
+          </button>
         </div>
       </div>
     </div>

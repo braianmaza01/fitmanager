@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { CheckCircle2, Lock } from "lucide-react";
+import { CheckCircle2, Lock, Trash2 } from "lucide-react";
 import api from "../api/axios";
 import StatusBadge from "../components/StatusBadge";
 import GymCard from "../components/GymCard";
+import DeleteGymModal from "../components/DeleteGymModal";
 
 export default function Admin() {
   const [gyms, setGyms] = useState([]);
   const [error, setError] = useState("");
+  const [deletingGym, setDeletingGym] = useState(null);
 
   async function loadGyms() {
     try {
@@ -27,6 +29,17 @@ export default function Admin() {
       loadGyms();
     } catch (err) {
       setError(err.response?.data?.message || "Error al cambiar estado");
+    }
+  }
+
+  async function confirmDeleteGym() {
+    if (!deletingGym) return;
+    try {
+      await api.delete(`/admin/gyms/${deletingGym._id}`);
+      setDeletingGym(null);
+      loadGyms();
+    } catch (err) {
+      setError(err.response?.data?.message || "Error al eliminar gimnasio");
     }
   }
 
@@ -51,6 +64,7 @@ export default function Admin() {
               gym={g}
               onApprove={(id) => changeStatus(id, "activo")}
               onBlock={(id) => changeStatus(id, "bloqueado")}
+              onDelete={setDeletingGym}
             />
           ))
         )}
@@ -99,6 +113,13 @@ export default function Admin() {
                         <Lock size={16} />
                       </button>
                     )}
+                    <button
+                      onClick={() => setDeletingGym(g)}
+                      aria-label="Eliminar"
+                      className="text-status-danger transition-opacity duration-200 hover:opacity-75"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -113,6 +134,14 @@ export default function Admin() {
           </tbody>
         </table>
       </div>
+
+      {deletingGym && (
+        <DeleteGymModal
+          gym={deletingGym}
+          onClose={() => setDeletingGym(null)}
+          onConfirm={confirmDeleteGym}
+        />
+      )}
     </div>
   );
 }
