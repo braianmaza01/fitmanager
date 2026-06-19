@@ -51,6 +51,10 @@ export default {
           "0%": { opacity: "1", transform: "translateY(0)" },
           "100%": { opacity: "0", transform: "translateY(-8px)" },
         },
+        "page-enter": {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "fade-in": "fade-in 250ms ease-out",
@@ -58,6 +62,7 @@ export default {
         "overlay-in": "overlay-in 200ms ease-out",
         "slide-down-in": "slide-down-in 280ms ease-out",
         "slide-down-out": "slide-down-out 250ms ease-in",
+        "page-enter": "page-enter 220ms ease-out",
       },
     },
   },

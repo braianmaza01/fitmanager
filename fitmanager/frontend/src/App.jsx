@@ -16,7 +16,7 @@ function AppLayout({ children }) {
       <Navbar />
       <Sidebar />
       <main className="w-full lg:ml-[220px] lg:w-[calc(100%-220px)] p-6">
-        <div key={location.pathname} className="animate-fade-in">
+        <div key={location.pathname} className="animate-page-enter">
           {children}
         </div>
       </main>

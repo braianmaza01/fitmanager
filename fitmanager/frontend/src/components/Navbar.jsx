@@ -30,7 +30,11 @@ export default function Navbar() {
     `px-3 py-2 text-sm ${isActive ? "text-accent" : "text-text-secondary hover:text-text-primary"}`;
 
   const mobileLinkClass = ({ isActive }) =>
-    `block px-4 py-3 text-base ${isActive ? "text-accent font-medium" : "text-text-secondary"}`;
+    `block px-4 py-3 text-base border-l-2 ${
+      isActive
+        ? "border-accent text-accent font-medium"
+        : "border-transparent text-text-secondary"
+    }`;
 
   return (
     <nav className="lg:hidden bg-surface-1 border-b border-white/[0.07]">
