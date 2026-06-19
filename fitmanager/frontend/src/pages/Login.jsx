@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-base flex items-center justify-center px-4 relative overflow-hidden">
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-accent/[0.08] rounded-full blur-[100px]" />
-      <div className="relative z-10 w-full max-w-sm bg-surface-1 border border-surface-3 p-8 animate-fade-in">
+      <div className="relative z-10 w-full max-w-sm bg-surface-1 border border-surface-3 rounded-[10px] p-8 animate-fade-in">
         <h1 className="text-2xl font-bold text-text-primary mb-1">
           Fit<span className="text-accent">Manager</span>
         </h1>
