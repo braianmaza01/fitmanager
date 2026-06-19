@@ -7,14 +7,14 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 function MetricCard({ icon, label, value, color, subtext }) {
   return (
     <div className="bg-surface-1 border border-white/[0.07] rounded-[10px] p-4">
-      <p className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.5px] text-text-secondary">
+      <p className="flex items-center gap-1.5 text-xs lg:text-[11px] uppercase tracking-[0.5px] text-text-secondary">
         {icon}
         {label}
       </p>
       <p className="text-[26px] font-bold mt-2 leading-none" style={{ color }}>
         {value}
       </p>
-      {subtext && <p className="text-xs text-text-secondary mt-1">{subtext}</p>}
+      {subtext && <p className="text-sm lg:text-xs text-text-secondary mt-1">{subtext}</p>}
     </div>
   );
 }

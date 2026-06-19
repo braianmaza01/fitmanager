@@ -30,7 +30,7 @@ export default function Navbar() {
     `px-3 py-2 text-sm ${isActive ? "text-accent" : "text-text-secondary hover:text-text-primary"}`;
 
   const mobileLinkClass = ({ isActive }) =>
-    `block px-4 py-3 text-sm ${isActive ? "text-accent" : "text-text-primary"}`;
+    `block px-4 py-3 text-base ${isActive ? "text-accent font-medium" : "text-text-secondary"}`;
 
   return (
     <nav className="lg:hidden bg-surface-1 border-b border-white/[0.07]">
@@ -38,7 +38,7 @@ export default function Navbar() {
         <div className="flex items-center gap-1">
           <div className="flex items-center gap-2 mr-4">
             <Dumbbell className="text-accent" size={20} />
-            <span className="text-text-primary font-bold">
+            <span className="text-text-primary font-bold text-lg">
               Fit<span className="text-accent">Manager</span>
             </span>
           </div>
@@ -89,7 +89,7 @@ export default function Navbar() {
           )}
           <button
             onClick={handleLogout}
-            className="block w-full text-left px-4 py-3 text-sm text-text-primary border-t border-surface-3"
+            className="block w-full text-left px-4 py-3 text-base text-text-secondary border-t border-surface-3"
           >
             Salir
           </button>

@@ -18,8 +18,8 @@ export default function StudentCard({ student, onEdit, onDelete, onPay }) {
             {getInitials(student.nombre)}
           </div>
           <div className="min-w-0">
-            <p className="text-text-primary text-sm font-medium truncate">{student.nombre}</p>
-            <p className="text-text-secondary text-xs truncate">{plan}</p>
+            <p className="text-text-primary text-base font-medium truncate">{student.nombre}</p>
+            <p className="text-text-secondary text-sm truncate">{plan}</p>
           </div>
         </div>
         <StatusBadge estado={student.estado} />

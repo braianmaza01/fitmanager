@@ -19,7 +19,7 @@ const STATUS_STYLE = {
 export default function StatusBadge({ estado }) {
   return (
     <span
-      className={`inline-flex items-center px-2 py-1 rounded-full text-[11px] uppercase tracking-[0.5px] font-medium ${STATUS_STYLE[estado]}`}
+      className={`inline-flex items-center px-2 py-1 rounded-full text-xs lg:text-[11px] uppercase tracking-[0.5px] font-medium ${STATUS_STYLE[estado]}`}
     >
       {STATUS_LABEL[estado]}
     </span>
