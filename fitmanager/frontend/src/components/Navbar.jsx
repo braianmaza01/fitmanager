@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Dumbbell } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+
+const MENU_CLOSE_DURATION = 250;
 
 export default function Navbar() {
   const { gym, logout } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuMounted, setMenuMounted] = useState(false);
+
+  useEffect(() => {
+    if (menuOpen) {
+      setMenuMounted(true);
+    } else if (menuMounted) {
+      const timeout = setTimeout(() => setMenuMounted(false), MENU_CLOSE_DURATION);
+      return () => clearTimeout(timeout);
+    }
+  }, [menuOpen, menuMounted]);
 
   function handleLogout() {
     setMenuOpen(false);
@@ -58,8 +70,12 @@ export default function Navbar() {
         </button>
       </div>
 
-      {menuOpen && (
-        <div className="md:hidden bg-surface-1 border-t border-surface-3">
+      {menuMounted && (
+        <div
+          className={`md:hidden bg-surface-1 border-t border-surface-3 origin-top ${
+            menuOpen ? "animate-slide-down-in" : "animate-slide-down-out"
+          }`}
+        >
           <NavLink to="/dashboard" className={mobileLinkClass} onClick={() => setMenuOpen(false)}>
             Dashboard
           </NavLink>
