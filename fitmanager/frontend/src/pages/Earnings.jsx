@@ -30,6 +30,7 @@ export default function Earnings() {
   }
 
   const maxTotal = history.reduce((max, h) => Math.max(max, h.total), 0);
+  const showProgress = history.length > 1;
 
   return (
     <div className="space-y-5">
@@ -58,14 +59,16 @@ export default function Earnings() {
                       ${h.total.toLocaleString("es-AR")}
                     </p>
                   </div>
-                  <div className="mt-3">
-                    <div className="h-2 bg-surface-3 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-accent rounded-full transition-all"
-                        style={{ width: `${progreso}%` }}
-                      />
+                  {showProgress && (
+                    <div className="mt-3">
+                      <div className="h-2 bg-surface-3 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-accent rounded-full transition-all"
+                          style={{ width: `${progreso}%` }}
+                        />
+                      </div>
                     </div>
-                  </div>
+                  )}
                   <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.07] text-sm text-text-secondary">
                     <span>{h.cantidadPagos} pagos</span>
                     <span>{h.alumnosUnicos} alumnos</span>
@@ -84,7 +87,7 @@ export default function Earnings() {
                   <th className="px-4 py-3">Total recaudado</th>
                   <th className="px-4 py-3">Pagos</th>
                   <th className="px-4 py-3">Alumnos</th>
-                  <th className="px-4 py-3">Proporción</th>
+                  {showProgress && <th className="px-4 py-3">Proporción</th>}
                 </tr>
               </thead>
               <tbody>
@@ -103,14 +106,16 @@ export default function Earnings() {
                       </td>
                       <td className="px-4 py-3 text-text-secondary">{h.cantidadPagos}</td>
                       <td className="px-4 py-3 text-text-secondary">{h.alumnosUnicos}</td>
-                      <td className="px-4 py-3">
-                        <div className="h-2 w-32 bg-surface-3 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-accent rounded-full transition-all"
-                            style={{ width: `${progreso}%` }}
-                          />
-                        </div>
-                      </td>
+                      {showProgress && (
+                        <td className="px-4 py-3">
+                          <div className="h-2 w-32 bg-surface-3 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-accent rounded-full transition-all"
+                              style={{ width: `${progreso}%` }}
+                            />
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   );
                 })}
