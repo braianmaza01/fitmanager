@@ -1,48 +1,43 @@
-# FitManager
+# FitManager 🏋️
 
-Sistema de gestión para gimnasios. Permite a cada gimnasio administrar sus alumnos, cuotas y vencimientos desde un panel propio, mientras un super-admin aprueba o bloquea el acceso de los gimnasios registrados.
+Sistema de gestión para gimnasios — SaaS multi-tenant con automatización de WhatsApp.
 
-## 🚀 Producción
+## 🌐 Links de producción
 
-- **Frontend:** https://magnificent-toffee-e35a6d.netlify.app
+- **Frontend:** https://fitmanager-gym.netlify.app
 - **Backend:** https://fitmanager-backend-pc15.onrender.com
 
-## 🛠️ Stack tecnológico
+## ✨ Features
 
-**Frontend**
-- React + Vite
-- Tailwind CSS v3
-- React Router
-- Axios
-- lucide-react (íconos)
+- Autenticación segura con JWT (sesión de 12 horas)
+- Multi-gimnasio con datos 100% aislados por gymId
+- Panel de Super Admin para aprobar, bloquear y eliminar gimnasios
+- CRUD completo de alumnos con estado automático (al día / por vencer / vencidos)
+- Cuota base + Personal Trainer como add-on opcional
+- Modal de confirmación para pagos y eliminaciones
+- Eliminación en cascada (alumno → pagos, gimnasio → alumnos → pagos)
+- Dashboard con métricas en tiempo real
+- Historial de ganancias mes a mes
+- Automatización de WhatsApp con Twilio (avisos 3 y 7 días antes del vencimiento)
+- Limpieza automática de pagos con más de 6 meses de antigüedad
+- Diseño dark fitness responsive (desktop con sidebar, mobile con hamburger)
 
-**Backend**
-- Node.js + Express
-- MongoDB + Mongoose
-- JWT (autenticación)
-- bcryptjs (hash de contraseñas)
+## 🛠 Stack
 
-## 💻 Correr el proyecto localmente
+- **Frontend:** React + Vite + Tailwind CSS v3
+- **Backend:** Node.js + Express
+- **Base de datos:** MongoDB Atlas + Mongoose
+- **Auth:** JWT
+- **Automatización:** node-cron + Twilio WhatsApp API
+- **Deploy:** Netlify (frontend) + Render (backend)
+
+## 🚀 Correr localmente
 
 ### Backend
 
 ```bash
 cd fitmanager/backend
 npm install
-```
-
-Crear un archivo `.env` con:
-
-```
-MONGO_URI=mongodb://localhost:27017/fitmanager
-JWT_SECRET=tu_secreto_seguro
-PORT=3000
-```
-
-Crear el usuario super-admin y levantar el servidor:
-
-```bash
-npm run seed
 npm run dev
 ```
 
@@ -51,40 +46,39 @@ npm run dev
 ```bash
 cd fitmanager/frontend
 npm install
+npm run dev
 ```
 
-Crear un archivo `.env` con:
+## ⚙️ Variables de entorno
+
+### Backend (.env)
+
+```
+MONGO_URI=tu_uri_de_mongodb_atlas
+JWT_SECRET=tu_clave_secreta
+PORT=3000
+TWILIO_ACCOUNT_SID=tu_account_sid
+TWILIO_AUTH_TOKEN=tu_auth_token
+TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
+```
+
+### Frontend (.env)
 
 ```
 VITE_API_URL=http://localhost:3000/api
 ```
 
-Levantar el servidor de desarrollo:
+## 👤 Credenciales de prueba (Super Admin)
 
-```bash
-npm run dev
-```
+- **Email:** admin@fitmanager.com
+- **Password:** admin1234
 
-## 🔑 Credenciales de prueba (super-admin)
+## 🤖 Jobs automáticos
 
-```
-Email: admin@fitmanager.com
-Password: admin1234
-```
+- **WhatsApp:** todos los días a las 9:00 AM avisa a alumnos que vencen en 3 o 7 días
+- **Limpieza:** el día 1 de cada mes a las 3:00 AM elimina pagos con más de 6 meses de antigüedad
 
-## ✨ Features principales
+## 📋 Próximamente
 
-- Registro de gimnasios con aprobación manual (estado pendiente / activo / bloqueado)
-- Login con JWT, aislado por gimnasio (cada gimnasio solo ve sus propios alumnos)
-- Panel de super-admin para aprobar o bloquear gimnasios
-- Gestión de alumnos: alta, edición, baja y búsqueda/filtros por estado
-- Cálculo automático de estado de cuota (al día / por vencer / vencido)
-- Registro de pagos con confirmación, que renueva el vencimiento 30 días
-- Dashboard con métricas (total de alumnos, al día, por vencer, vencidos), próximos vencimientos y ganancias del mes
-- Diseño responsive: sidebar en desktop, navbar con menú hamburguesa en mobile
-
-## 🔜 Próximamente
-
-- Historial de ganancias por mes/período
-- Notificaciones de vencimiento por WhatsApp
-- Limpieza automática de alumnos inactivos/vencidos hace mucho tiempo
+- Integración con MercadoPago para suscripciones automáticas
+- Registro de pagos manuales con historial por alumno
