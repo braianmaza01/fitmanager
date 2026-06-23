@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const sessionExpired = searchParams.get("sessionExpired") === "1";
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -32,6 +34,12 @@ export default function Login() {
           Fit<span className="text-accent">Manager</span>
         </h1>
         <p className="text-text-secondary text-sm mb-6">Ingresá a tu panel de gimnasio</p>
+
+        {sessionExpired && !error && (
+          <div className="bg-status-warning/10 border border-status-warning text-status-warning text-sm px-3 py-2 mb-4">
+            Tu sesión expiró, por favor iniciá sesión de nuevo
+          </div>
+        )}
 
         {error && (
           <div className="bg-status-danger/10 border border-status-danger text-status-danger text-sm px-3 py-2 mb-4">

@@ -4,7 +4,7 @@ const Gym = require("../models/Gym");
 
 function generateToken(gym) {
   return jwt.sign({ gymId: gym._id, role: gym.role }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
+    expiresIn: "12h",
   });
 }
 

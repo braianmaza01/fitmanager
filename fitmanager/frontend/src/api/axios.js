@@ -12,4 +12,20 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const isAuthEndpoint = error.config?.url?.includes("/auth/login") || error.config?.url?.includes("/auth/register");
+
+    if (error.response?.status === 401 && !isAuthEndpoint) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("gym");
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login?sessionExpired=1";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;
