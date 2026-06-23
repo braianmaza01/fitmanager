@@ -2,6 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const app = require("./app");
 const startCleanupJob = require("./jobs/cleanupJob");
+const startWhatsAppJob = require("./jobs/whatsappJob");
 
 const PORT = process.env.PORT || 5000;
 
@@ -11,6 +12,7 @@ mongoose
     console.log("Conectado a MongoDB");
     app.listen(PORT, () => console.log(`Servidor backend corriendo en puerto ${PORT}`));
     startCleanupJob();
+    startWhatsAppJob();
   })
   .catch((err) => {
     console.error("Error al conectar a MongoDB:", err.message);
