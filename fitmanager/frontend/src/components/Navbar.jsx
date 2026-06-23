@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Dumbbell } from "lucide-react";
+import { Dumbbell, BarChart3 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 const MENU_CLOSE_DURATION = 250;
@@ -49,6 +49,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-1">
             <NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink>
             <NavLink to="/students" className={linkClass}>Alumnos</NavLink>
+            <NavLink to="/ganancias" className={linkClass}>Ganancias</NavLink>
             {gym?.role === "superadmin" && (
               <NavLink to="/admin" className={linkClass}>Admin</NavLink>
             )}
@@ -85,6 +86,20 @@ export default function Navbar() {
           </NavLink>
           <NavLink to="/students" className={mobileLinkClass} onClick={() => setMenuOpen(false)}>
             Alumnos
+          </NavLink>
+          <NavLink
+            to="/ganancias"
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-3 text-[1rem] border-l-2 ${
+                isActive
+                  ? "border-accent text-accent font-medium"
+                  : "border-transparent text-text-secondary"
+              }`
+            }
+            onClick={() => setMenuOpen(false)}
+          >
+            <BarChart3 size={16} />
+            Ganancias
           </NavLink>
           {gym?.role === "superadmin" && (
             <NavLink to="/admin" className={mobileLinkClass} onClick={() => setMenuOpen(false)}>

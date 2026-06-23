@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Student = require("../models/Student");
 const Payment = require("../models/Payment");
 const { getStudentStatus } = require("../utils/studentStatus");
@@ -51,4 +52,41 @@ async function getDashboard(req, res) {
   }
 }
 
-module.exports = { getDashboard };
+async function getEarningsHistory(req, res) {
+  try {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth() - 5, 1);
+
+    const results = await Payment.aggregate([
+      {
+        $match: {
+          gymId: new mongoose.Types.ObjectId(req.user.gymId),
+          createdAt: { $gte: start },
+        },
+      },
+      {
+        $group: {
+          _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+          total: { $sum: "$monto" },
+          cantidadPagos: { $sum: 1 },
+          alumnos: { $addToSet: "$studentId" },
+        },
+      },
+      { $sort: { "_id.year": -1, "_id.month": -1 } },
+    ]);
+
+    const history = results.map((r) => ({
+      mes: r._id.month,
+      anio: r._id.year,
+      total: r.total,
+      cantidadPagos: r.cantidadPagos,
+      alumnosUnicos: r.alumnos.length,
+    }));
+
+    return res.json(history);
+  } catch (err) {
+    return res.status(500).json({ message: "Error al obtener el historial de ganancias", error: err.message });
+  }
+}
+
+module.exports = { getDashboard, getEarningsHistory };

@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Students from "./pages/Students";
 import Admin from "./pages/Admin";
+import Earnings from "./pages/Earnings";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
@@ -55,6 +56,26 @@ export default function App() {
           <ProtectedRoute requireSuperAdmin>
             <AppLayout>
               <Admin />
+            </AppLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/ganancias"
+        element={
+          <ProtectedRoute>
+            <AppLayout>
+              <Earnings />
+            </AppLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/earnings"
+        element={
+          <ProtectedRoute>
+            <AppLayout>
+              <Earnings />
             </AppLayout>
           </ProtectedRoute>
         }

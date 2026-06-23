@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { Dumbbell, LayoutDashboard, Users, ShieldCheck, LogOut } from "lucide-react";
+import { Dumbbell, LayoutDashboard, Users, ShieldCheck, LogOut, BarChart3 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 export default function Sidebar() {
@@ -37,6 +37,10 @@ export default function Sidebar() {
         <NavLink to="/students" className={linkClass}>
           <Users size={18} />
           Alumnos
+        </NavLink>
+        <NavLink to="/ganancias" className={linkClass}>
+          <BarChart3 size={18} />
+          Ganancias
         </NavLink>
         {gym?.role === "superadmin" && (
           <NavLink to="/admin" className={linkClass}>
