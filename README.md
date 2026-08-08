@@ -84,10 +84,9 @@ TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
 VITE_API_URL=http://localhost:3000/api
 ```
 
-## 👤 Credenciales de prueba (Super Admin)
+## 👤 Demo
 
-- **Email:** admin@fitmanager.com
-- **Password:** admin1234
+¿Querés probar el sistema? Escribime por [Instagram](https://instagram.com/braian.webdev) y te doy acceso a un entorno de prueba.
 
 ## 🤖 Jobs automáticos
 
