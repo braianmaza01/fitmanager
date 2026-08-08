@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const Gym = require("./src/models/Gym");
 
-const SUPERADMIN_EMAIL = "admin@fitmanager.com";
-const SUPERADMIN_PASSWORD = "admin1234";
+const SUPERADMIN_EMAIL = process.env.SUPERADMIN_EMAIL;
+const SUPERADMIN_PASSWORD = process.env.SUPERADMIN_PASSWORD;
 
 async function seed() {
   await mongoose.connect(process.env.MONGO_URI);
@@ -26,7 +26,7 @@ async function seed() {
     role: "superadmin",
   });
 
-  console.log(`Superadmin creado: ${SUPERADMIN_EMAIL} / ${SUPERADMIN_PASSWORD}`);
+  console.log(`Superadmin creado: ${SUPERADMIN_EMAIL}`);
   await mongoose.disconnect();
 }
 
