@@ -18,8 +18,6 @@
 
 ---
 
-Sistema de gestión para gimnasios — SaaS multi-tenant con automatización de WhatsApp.
-
 ## 🌐 Links de producción
 
 - **Frontend:** https://fitmanager-gym.netlify.app
