@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import { Users, CheckCircle2, Clock, XCircle, TrendingUp } from "lucide-react";
+import {
+  Users,
+  CheckCircle2,
+  Clock,
+  XCircle,
+  TrendingUp,
+  Dumbbell,
+  Calendar,
+  MessageCircle,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
@@ -8,7 +17,7 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 
 function MetricCard({ icon, label, value, color, subtext }) {
   return (
-    <div className="bg-surface-1 border border-white/[0.07] rounded-[10px] p-4">
+    <div className="bg-surface-1 border border-white/[0.07] rounded-[10px] p-4 hover:border-white/20 transition-colors duration-300">
       <p className="flex items-center gap-1.5 text-xs lg:text-[11px] uppercase tracking-[0.5px] text-text-secondary">
         {icon}
         {label}
@@ -16,7 +25,9 @@ function MetricCard({ icon, label, value, color, subtext }) {
       <p className="text-[26px] font-bold mt-2 leading-none" style={{ color }}>
         {value}
       </p>
-      {subtext && <p className="text-sm lg:text-xs text-text-secondary mt-1">{subtext}</p>}
+      {subtext && (
+        <p className="text-sm lg:text-xs text-text-secondary mt-1">{subtext}</p>
+      )}
     </div>
   );
 }
@@ -42,108 +53,170 @@ export default function Dashboard() {
     api
       .get("/dashboard")
       .then((res) => setData(res.data))
-      .catch((err) => setError(err.response?.data?.message || "Error al cargar el dashboard"));
+      .catch((err) =>
+        setError(
+          err.response?.data?.message || "Error al cargar el dashboard"
+        )
+      );
 
     api
       .get("/students")
       .then((res) => {
         const total = res.data.reduce(
-          (acc, s) => acc + (s.cuotaBase || 0) + (s.tienePersonalTrainer ? s.montoPersonalTrainer || 0 : 0),
+          (acc, s) =>
+            acc +
+            (s.cuotaBase || 0) +
+            (s.tienePersonalTrainer ? s.montoPersonalTrainer || 0 : 0),
           0
         );
         setPotencial(total);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
-  if (error) {
-    return <p className="text-status-danger">{error}</p>;
-  }
+  if (error) return <p className="text-status-danger">{error}</p>;
+  if (!data) return <p className="text-text-secondary">Cargando...</p>;
 
-  if (!data) {
-    return <p className="text-text-secondary">Cargando...</p>;
-  }
-
-  const progreso = potencial > 0 ? Math.min(100, Math.round((data.gananciasMes / potencial) * 100)) : 0;
+  const progreso =
+    potencial > 0
+      ? Math.min(100, Math.round((data.gananciasMes / potencial) * 100))
+      : 0;
 
   return (
     <div className="space-y-6">
 
       {/* BIENVENIDA */}
-      <div>
+      <div className="animate-fade-in-up">
         <p className="text-sm text-text-secondary mb-0.5">
           Bienvenido,{" "}
-          <span className="text-text-primary font-medium">{gym?.nombre}</span> 👋
+          <span className="text-text-primary font-medium">{gym?.nombre}</span>{" "}
+          💪
         </p>
         <h1 className="text-xl font-bold text-text-primary">Dashboard</h1>
       </div>
 
       {/* MÉTRICAS */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard
-          icon={<Users size={14} />}
-          label="Total alumnos"
-          value={data.totalAlumnos}
-          color="#f0f0f0"
-          subtext="Alumnos registrados"
-        />
-        <MetricCard
-          icon={<CheckCircle2 size={14} />}
-          label="Al día"
-          value={data.alDia}
-          color="#22c55e"
-          subtext="Cuota vigente"
-        />
-        <MetricCard
-          icon={<Clock size={14} />}
-          label="Por vencer"
-          value={data.porVencer}
-          color="#f59e0b"
-          subtext="Próximos 7 días"
-        />
-        <MetricCard
-          icon={<XCircle size={14} />}
-          label="Vencidos"
-          value={data.vencido}
-          color="#ef4444"
-          subtext="Requieren renovar"
-        />
+        <div className="animate-fade-in-up delay-100">
+          <MetricCard
+            icon={<Users size={14} />}
+            label="Total alumnos"
+            value={data.totalAlumnos}
+            color="#f0f0f0"
+            subtext="Alumnos registrados"
+          />
+        </div>
+        <div className="animate-fade-in-up delay-200">
+          <MetricCard
+            icon={<CheckCircle2 size={14} />}
+            label="Al día"
+            value={data.alDia}
+            color="#22c55e"
+            subtext="Cuota vigente"
+          />
+        </div>
+        <div className="animate-fade-in-up delay-300">
+          <MetricCard
+            icon={<Clock size={14} />}
+            label="Por vencer"
+            value={data.porVencer}
+            color="#f59e0b"
+            subtext="Próximos 7 días"
+          />
+        </div>
+        <div className="animate-fade-in-up delay-400">
+          <MetricCard
+            icon={<XCircle size={14} />}
+            label="Vencidos"
+            value={data.vencido}
+            color="#ef4444"
+            subtext="Requieren renovar"
+          />
+        </div>
       </div>
 
       {/* ESTADO VACÍO O SECCIONES */}
       {data.totalAlumnos === 0 ? (
-        <div className="bg-surface-1 border border-white/[0.07] rounded-[10px] p-8 text-center">
-          <p className="text-4xl mb-3">🏋️</p>
-          <p className="text-text-primary font-medium text-base mb-1">
-            Tu panel está listo
+        <div className="animate-fade-in-up delay-200 bg-surface-1 border border-white/[0.07] rounded-[10px] p-8 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="w-14 h-14 rounded-full bg-surface-2 border border-white/[0.07] flex items-center justify-center">
+              <Dumbbell size={26} className="text-accent" />
+            </div>
+          </div>
+          <p className="text-text-primary font-semibold text-lg mb-2">
+            Bienvenido a FitManager
           </p>
-          <p className="text-text-secondary text-sm mb-5">
-            Empezá agregando tu primer alumno para ver las métricas en acción.
+          <p className="text-text-secondary text-sm mb-6 max-w-md mx-auto leading-relaxed">
+            Tu sistema de gestión para gimnasios. Controlá cuotas, vencimientos
+            y ganancias — todo en un solo lugar. Tus alumnos reciben avisos
+            automáticos por WhatsApp antes de que venza su membresía.
           </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-left max-w-lg mx-auto">
+            <div className="bg-surface-2 border border-white/[0.07] rounded-lg p-3 hover:border-white/20 transition-colors duration-300">
+              <div className="flex items-center gap-2 mb-1.5">
+                <Users size={14} className="text-accent" />
+                <p className="text-text-primary text-xs font-medium">
+                  Registrá alumnos
+                </p>
+              </div>
+              <p className="text-text-secondary text-xs leading-relaxed">
+                Con cuota base y personal trainer opcional
+              </p>
+            </div>
+            <div className="bg-surface-2 border border-white/[0.07] rounded-lg p-3 hover:border-white/20 transition-colors duration-300">
+              <div className="flex items-center gap-2 mb-1.5">
+                <Calendar size={14} className="text-accent" />
+                <p className="text-text-primary text-xs font-medium">
+                  Controlá vencimientos
+                </p>
+              </div>
+              <p className="text-text-secondary text-xs leading-relaxed">
+                Sabé en todo momento quién debe renovar
+              </p>
+            </div>
+            <div className="bg-surface-2 border border-white/[0.07] rounded-lg p-3 hover:border-white/20 transition-colors duration-300">
+              <div className="flex items-center gap-2 mb-1.5">
+                <MessageCircle size={14} className="text-accent" />
+                <p className="text-text-primary text-xs font-medium">
+                  Avisos por WhatsApp
+                </p>
+              </div>
+              <p className="text-text-secondary text-xs leading-relaxed">
+                Automáticos, sin hacer nada manual
+              </p>
+            </div>
+          </div>
           <button
             onClick={() => navigate("/students")}
-            className="inline-flex items-center gap-2 bg-accent text-bg-base font-medium text-sm px-5 py-2.5 rounded-md"
+            className="inline-flex items-center gap-2 bg-accent text-black font-medium text-sm px-5 py-2.5 rounded-md hover:opacity-90 transition-opacity duration-200"
           >
             + Agregar primer alumno
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="animate-fade-in-up delay-200 grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* PRÓXIMOS VENCIMIENTOS */}
           <div className="bg-surface-1 border border-white/[0.07] rounded-[10px] p-4">
             <h2 className="text-[11px] uppercase tracking-[0.5px] text-text-secondary mb-4">
               Próximos vencimientos
             </h2>
             {data.proximosVencimientos.length === 0 ? (
-              <p className="text-text-secondary text-sm">No hay vencimientos próximos.</p>
+              <p className="text-text-secondary text-sm">
+                No hay vencimientos próximos.
+              </p>
             ) : (
               <ul className="space-y-3">
                 {data.proximosVencimientos.map((s) => {
                   const dias = diasRestantes(s.fechaVencimiento);
                   return (
-                    <li key={s.id} className="flex items-center justify-between text-sm">
+                    <li
+                      key={s.id}
+                      className="flex items-center justify-between text-sm"
+                    >
                       <span className="flex items-center gap-2 text-text-primary">
-                        <span className={`w-2 h-2 rounded-full ${dotColor(dias)}`} />
+                        <span
+                          className={`w-2 h-2 rounded-full ${dotColor(dias)}`}
+                        />
                         {s.nombre}
                       </span>
                       <span className="text-right">
@@ -151,7 +224,9 @@ export default function Dashboard() {
                           {new Date(s.fechaVencimiento).toLocaleDateString()}
                         </span>
                         <span className="text-status-warning text-xs">
-                          {dias < 0 ? `${Math.abs(dias)}d vencido` : `${dias}d restantes`}
+                          {dias < 0
+                            ? `${Math.abs(dias)}d vencido`
+                            : `${dias}d restantes`}
                         </span>
                       </span>
                     </li>
@@ -173,7 +248,7 @@ export default function Dashboard() {
             <div className="mt-4">
               <div className="h-2 bg-surface-3 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-accent rounded-full transition-all"
+                  className="h-full bg-accent rounded-full transition-all duration-700"
                   style={{ width: `${progreso}%` }}
                 />
               </div>
