@@ -11,16 +11,27 @@ import Sidebar from "./components/Sidebar";
 
 function AppLayout({ children }) {
   const location = useLocation();
+  const year = new Date().getFullYear();
 
   return (
-    <div className="min-h-screen w-full bg-base overflow-x-hidden">
+    <div className="min-h-screen w-full bg-base overflow-x-hidden flex flex-col">
       <Navbar />
       <Sidebar />
-      <main className="w-full lg:ml-[220px] lg:w-[calc(100%-220px)] p-6">
+      <main className="flex-1 w-full lg:ml-[220px] lg:w-[calc(100%-220px)] p-6">
         <div key={location.pathname} className="animate-page-enter">
           {children}
         </div>
       </main>
+      <footer className="w-full lg:ml-[220px] lg:w-[calc(100%-220px)] border-t border-white/[0.07] px-6 py-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-text-secondary text-xs">
+            © {year} <span className="text-text-primary font-medium">FitManager</span> — Sistema de gestión para gimnasios
+          </p>
+          <p className="text-text-secondary text-xs">
+            Desarrollado por <span className="text-accent font-medium">braian.webdev</span>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
