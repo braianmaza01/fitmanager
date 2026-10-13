@@ -10,7 +10,9 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Conectado a MongoDB");
-    app.listen(PORT, () => console.log(`Servidor backend corriendo en puerto ${PORT}`));
+    app.listen(PORT, () =>
+      console.log(`Servidor backend corriendo en puerto ${PORT}`)
+    );
     startCleanupJob();
     startWhatsAppJob();
   })
